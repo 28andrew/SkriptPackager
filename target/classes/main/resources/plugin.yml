@@ -1,9 +1,0 @@
-#DO NOT TOUCH THIS
-main: com.gmail.xxandrew28xx.SkriptPackager
-soft-depend: [Skript]
-
-#EDITABLE:
-name: SkriptPackager
-author: xXAndrew28Xx
-version: 0.0.1
-description: Have others install Skripts at ease
