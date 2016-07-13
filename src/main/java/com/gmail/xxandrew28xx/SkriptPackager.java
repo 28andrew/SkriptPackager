@@ -147,11 +147,12 @@ public class SkriptPackager extends JavaPlugin implements Listener{
 				//Addons (set addons_loaded to false upon fails)
 				ConfigurationSection addons = config.getConfigurationSection("addons");
 				if (addons != null){
-					HashMap<VersionMatcher, URL> addon_urls = new HashMap<VersionMatcher, URL>();
 					for (String addon_name : addons.getKeys(false)){
 						if (pluginLoaded(addon_name)){
 							continue;
 						}
+
+						HashMap<VersionMatcher, URL> addon_urls = new HashMap<VersionMatcher, URL>();
 						ConfigurationSection addon = addons.getConfigurationSection(addon_name);
 						if (addon.contains("any-version")){
 							try{
@@ -193,7 +194,9 @@ public class SkriptPackager extends JavaPlugin implements Listener{
 									info(getLang("installing-dependency", addon_name));
 									
 									//FileUtils.copyURLToFile(url, new File("plugins/" + addon_name + ".jar"));
+									System.out.println(url);
 									saveFile(url, new File("plugins/" + addon_name + ".jar"));
+									
 									info(getLang("installed-dependency", addon_name));
 								}catch(Exception e){
 									info(getLang("could-not-download-and-save", url.toString(), "plugins/" + addon_name + ".jar"));
@@ -218,7 +221,7 @@ public class SkriptPackager extends JavaPlugin implements Listener{
 					if (scripts != null){
 						for (String script_name : scripts.getKeys(false)){
 							ConfigurationSection script = scripts.getConfigurationSection(script_name);
-							String file_name = script.getString("file-name");
+							String file_name = script_name + ".sk";
 							if (script.contains("hide") && script.getString("hide").equalsIgnoreCase("true")){
 								enableHiddenScript(instance.getResource(file_name), script_name);
 							}else{
@@ -257,7 +260,9 @@ public class SkriptPackager extends JavaPlugin implements Listener{
 				URLConnection conn = download.openConnection();
 				conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0");
 				conn.connect();
-				FileUtils.copyInputStreamToFile(conn.getInputStream(), output);
+				InputStream is = conn.getInputStream();
+				FileUtils.copyInputStreamToFile(is, output);
+				is.close();
 			}
 			private Boolean pluginLoaded(String pl){
 				Plugin[] plugins = Bukkit.getServer().getPluginManager().getPlugins();
