@@ -1,5 +1,5 @@
 # SkriptPackager
-Turn Skripts in to Jars
+This is the template plugin. The GUI edits & compiles it.
 
 SkriptPackagerGUI does this:
 - Gets user input
@@ -9,3 +9,5 @@ SkriptPackagerGUI does this:
 - Edits config.yml & plugin.yml
 - mvn install
 - Gives jar to user
+
+[Check out SkriptPackagerGUI](https://github.com/xXAndrew28Xx/SkriptPackagerGUI)
